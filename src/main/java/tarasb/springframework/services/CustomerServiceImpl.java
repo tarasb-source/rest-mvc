@@ -5,6 +5,7 @@ import tarasb.springframework.api.v1.mapper.CustomerMapper;
 import tarasb.springframework.api.v1.model.CustomerDTO;
 import tarasb.springframework.controllers.CustomerController;
 import tarasb.springframework.domain.Customer;
+import tarasb.springframework.exceptions.ResourceNotFoundException;
 import tarasb.springframework.repositories.CustomerRepository;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDTO getCustomerById(Long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
-        return customerOptional.map(customerMapper::customerToCustomerDTO).orElse(null);
+        return customerOptional.map(customerMapper::customerToCustomerDTO).orElseThrow(ResourceNotFoundException::new);
     }
 
     @Override
@@ -68,11 +69,11 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO patchCustomer(Long id, CustomerDTO customerDTO) {
         return customerRepository.findById(id).map(customer -> {
 
-            if(customerDTO.getFirstname() != null){
+            if (customerDTO.getFirstname() != null) {
                 customer.setFirstname(customerDTO.getFirstname());
             }
 
-            if(customerDTO.getLastname() != null){
+            if (customerDTO.getLastname() != null) {
                 customer.setLastname(customerDTO.getLastname());
             }
 
@@ -81,7 +82,12 @@ public class CustomerServiceImpl implements CustomerService {
 
             return returnDto;
 
-        }).orElseThrow(RuntimeException::new); //todo implement better exception handling;
+        }).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public void deleteCustomerById(Long id) {
+        customerRepository.deleteById(id);
     }
 
     //===========Helper Method===============//
