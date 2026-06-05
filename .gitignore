@@ -32,6 +32,10 @@ build/
 ### VS Code ###
 .vscode/
 
+# Node
+node_modules/
+coverage/
+
 # Local environment file (should not be committed)
 .env
 
