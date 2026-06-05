@@ -13,7 +13,7 @@ public interface CustomerMapper {
 
     @Mapping(
             target = "customerUrl",
-            expression = "java(\"/api/v1/customers/\" + customer.getId())"
+            expression = "java(tarasb.springframework.controllers.CustomerController.BASE_URL + \"/\" + customer.getId())"
     )
     CustomerDTO customerToCustomerDTO(Customer customer);
 

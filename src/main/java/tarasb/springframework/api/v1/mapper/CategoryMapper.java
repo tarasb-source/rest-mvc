@@ -13,7 +13,7 @@ public interface CategoryMapper {
 
     @Mapping(
             target = "categoryUrl",
-            expression = "java(\"/api/v1/categories/\" + category.getId())"
+            expression = "java(tarasb.springframework.controllers.CategoryController.BASE_URL + \"/\" +  category.getId())"
     )
     CategoryDTO categoryToCategoryDTO(Category category);
 }

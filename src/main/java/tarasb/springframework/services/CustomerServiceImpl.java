@@ -3,6 +3,7 @@ package tarasb.springframework.services;
 import org.springframework.stereotype.Service;
 import tarasb.springframework.api.v1.mapper.CustomerMapper;
 import tarasb.springframework.api.v1.model.CustomerDTO;
+import tarasb.springframework.controllers.CustomerController;
 import tarasb.springframework.domain.Customer;
 import tarasb.springframework.repositories.CustomerRepository;
 
@@ -40,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerMapper.customerDTOToCustomer(customerDTO);
         Customer savedCustomer = customerRepository.save(customer);
         CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
-        returnDto.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
+        returnDto.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
 
         return returnDto;
     }
@@ -50,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         CustomerDTO returnDto = customerMapper.customerToCustomerDTO(savedCustomer);
 
-        returnDto.setCustomerUrl("/api/v1/customer/" + savedCustomer.getId());
+        returnDto.setCustomerUrl(getCustomerUrl(savedCustomer.getId()));
 
         return returnDto;
     }
@@ -75,7 +76,16 @@ public class CustomerServiceImpl implements CustomerService {
                 customer.setLastname(customerDTO.getLastname());
             }
 
-            return customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+            CustomerDTO returnDto = customerMapper.customerToCustomerDTO(customerRepository.save(customer));
+            returnDto.setCustomerUrl(getCustomerUrl(id));
+
+            return returnDto;
+
         }).orElseThrow(RuntimeException::new); //todo implement better exception handling;
+    }
+
+    //===========Helper Method===============//
+    private String getCustomerUrl(Long id) {
+        return CustomerController.BASE_URL + "/" + id;
     }
 }
