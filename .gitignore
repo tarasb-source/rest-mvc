@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local environment file (should not be committed)
+.env
+
+# Optional application secrets file for local development
+src/main/resources/application-secrets.properties
+
