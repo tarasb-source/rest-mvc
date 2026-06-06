@@ -1,15 +1,13 @@
 package tarasb.springframework.controllers;
 
-import io.swagger.v3.oas.annotations.OpenAPI31;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.models.annotations.OpenAPI30;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+//import tarasb.springframework.api.v1.oldDTO.CustomerDTO;
+//import tarasb.springframework.api.v1.oldDTO.CustomerListDTO;
+//import tarasb.springframework.api.v1.oldDTO.CustomerDTO;
+//import tarasb.springframework.api.v1.oldDTO.CustomerListDTO;
 import tarasb.springframework.api.v1.model.CustomerDTO;
 import tarasb.springframework.api.v1.model.CustomerListDTO;
 import tarasb.springframework.services.CustomerService;
@@ -42,7 +40,9 @@ public class CustomerController {
     @GetMapping({"", "/"})
     @ResponseStatus(HttpStatus.OK)
     public CustomerListDTO getAllCustomers() {
-        return new CustomerListDTO(customerService.getAllCustomers());
+        CustomerListDTO customerListDTO = new CustomerListDTO();
+        customerListDTO.getCustomers().addAll(customerService.getAllCustomers());
+        return customerListDTO;
     }
 
     @Operation(summary = "Get customer by ID")

@@ -19,8 +19,8 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
 
     @Override
     public final boolean equals(Object o) {

@@ -64,20 +64,20 @@ public class Bootstrap implements CommandLineRunner {
 
     public void loadCustomers() {
         Customer fred = new Customer();
-        fred.setFirstname("Fred");
-        fred.setLastname("Buckley");
+        fred.setFirstName("Fred");
+        fred.setLastName("Buckley");
 
         Customer kate = new Customer();
-        kate.setFirstname("Kate");
-        kate.setLastname("Smith");
+        kate.setFirstName("Kate");
+        kate.setLastName("Smith");
 
         Customer chuck = new Customer();
-        chuck.setFirstname("Chuck");
-        chuck.setLastname("Bard");
+        chuck.setFirstName("Chuck");
+        chuck.setLastName("Bard");
 
         Customer renate = new Customer();
-        renate.setFirstname("Renate");
-        renate.setLastname("Reinsve");
+        renate.setFirstName("Renate");
+        renate.setLastName("Reinsve");
 
         customerRepository.save(fred);
         customerRepository.save(kate);

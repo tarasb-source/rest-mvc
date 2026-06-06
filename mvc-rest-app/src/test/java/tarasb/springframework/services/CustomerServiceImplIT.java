@@ -1,7 +1,6 @@
 package tarasb.springframework.services;
 
 
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +53,20 @@ public class CustomerServiceImplIT {
 
         assertNotNull(originalCustomer);
         //save original first name
-        String originalFirstName = originalCustomer.getFirstname();
-        String originalLastName = originalCustomer.getLastname();
+        String originalFirstName = originalCustomer.getFirstName();
+        String originalLastName = originalCustomer.getLastName();
 
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setFirstname(updatedName);
+        customerDTO.setFirstName(updatedName);
 
         customerService.patchCustomer(id, customerDTO);
 
         Customer updatedCustomer = customerRepository.findById(id).get();
 
         assertNotNull(updatedCustomer);
-        assertEquals(updatedName, updatedCustomer.getFirstname());
-        assertThat(originalFirstName, not(equalTo(updatedCustomer.getFirstname())));
-        assertThat(originalLastName, equalTo(updatedCustomer.getLastname()));
+        assertEquals(updatedName, updatedCustomer.getFirstName());
+        assertThat(originalFirstName, not(equalTo(updatedCustomer.getFirstName())));
+        assertThat(originalLastName, equalTo(updatedCustomer.getLastName()));
     }
 
     @Test
@@ -79,20 +78,20 @@ public class CustomerServiceImplIT {
         assertNotNull(originalCustomer);
 
         //save original first/last name
-        String originalFirstName = originalCustomer.getFirstname();
-        String originalLastName = originalCustomer.getLastname();
+        String originalFirstName = originalCustomer.getFirstName();
+        String originalLastName = originalCustomer.getLastName();
 
         CustomerDTO customerDTO = new CustomerDTO();
-        customerDTO.setLastname(updatedName);
+        customerDTO.setLastName(updatedName);
 
         customerService.patchCustomer(id, customerDTO);
 
         Customer updatedCustomer = customerRepository.findById(id).get();
 
         assertNotNull(updatedCustomer);
-        assertEquals(updatedName, updatedCustomer.getLastname());
-        assertThat(originalFirstName, equalTo(updatedCustomer.getFirstname()));
-        assertThat(originalLastName, not(equalTo(updatedCustomer.getLastname())));
+        assertEquals(updatedName, updatedCustomer.getLastName());
+        assertThat(originalFirstName, equalTo(updatedCustomer.getFirstName()));
+        assertThat(originalLastName, not(equalTo(updatedCustomer.getLastName())));
     }
 
     private Long getCustomerIdValue(){
@@ -104,3 +103,5 @@ public class CustomerServiceImplIT {
         return customers.get(0).getId();
     }
 }
+
+

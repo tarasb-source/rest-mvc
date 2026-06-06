@@ -1,7 +1,7 @@
 package tarasb.springframework.services;
 
+//import tarasb.springframework.api.v1.oldDTO.CustomerDTO;
 import tarasb.springframework.api.v1.model.CustomerDTO;
-
 import java.util.List;
 
 public interface CustomerService {

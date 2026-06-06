@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import tarasb.springframework.api.v1.model.CustomerDTO;
@@ -17,7 +18,6 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -38,9 +38,9 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-
         mockMvc = MockMvcBuilders.standaloneSetup(customerController)
                 .setControllerAdvice(new RestResponseEntityExceptionHandler())
+                .setMessageConverters(new MappingJackson2HttpMessageConverter(OBJECT_MAPPER))
                 .build();
     }
 
@@ -49,13 +49,13 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
         //given
         CustomerDTO customer1 = new CustomerDTO();
-        customer1.setFirstname("Michale");
-        customer1.setLastname("Weston");
+        customer1.setFirstName("Michale");
+        customer1.setLastName("Weston");
         customer1.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         CustomerDTO customer2 = new CustomerDTO();
-        customer2.setFirstname("Sam");
-        customer2.setLastname("Axe");
+        customer2.setFirstName("Sam");
+        customer2.setLastName("Axe");
         customer2.setCustomerUrl(CustomerController.BASE_URL + "/2");
 
         when(customerService.getAllCustomers()).thenReturn(Arrays.asList(customer1, customer2));
@@ -71,8 +71,8 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
         //given
         CustomerDTO customer1 = new CustomerDTO();
-        customer1.setFirstname("Michale");
-        customer1.setLastname("Weston");
+        customer1.setFirstName("Michale");
+        customer1.setLastName("Weston");
         customer1.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.getCustomerById(anyLong())).thenReturn(customer1);
@@ -88,15 +88,15 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     public void createNewCustomer() throws Exception {
         //given
         CustomerDTO customer = new CustomerDTO();
-        customer.setFirstname("Fred");
-        customer.setLastname("Flintstone");
+        customer.setFirstName("Fred");
+        customer.setLastName("Flintstone");
 
         CustomerDTO returnDTO = new CustomerDTO();
-        returnDTO.setFirstname(customer.getFirstname());
-        returnDTO.setLastname(customer.getLastname());
+        returnDTO.setFirstName(customer.getFirstName());
+        returnDTO.setLastName(customer.getLastName());
         returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
-        when(customerService.createNewCustomer(customer)).thenReturn(returnDTO);
+        when(customerService.createNewCustomer(any(CustomerDTO.class))).thenReturn(returnDTO);
 
         //when/then
         mockMvc.perform(post(CustomerController.BASE_URL + "/")
@@ -110,11 +110,11 @@ class CustomerControllerTest extends AbstractRestControllerTest {
     @Test
     public void patchCustomer() throws Exception {
         CustomerDTO customer = new CustomerDTO();
-        customer.setFirstname("Fred");
+        customer.setFirstName("Fred");
 
         CustomerDTO returnDTO = new CustomerDTO();
-        returnDTO.setFirstname(customer.getFirstname());
-        returnDTO.setLastname("Flintstone");
+        returnDTO.setFirstName(customer.getFirstName());
+        returnDTO.setLastName("Flintstone");
         returnDTO.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
         when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(returnDTO);

@@ -1,4 +1,4 @@
-package tarasb.springframework.api.v1.model;
+package tarasb.springframework.api.v1.oldDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
