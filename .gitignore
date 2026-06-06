@@ -40,5 +40,5 @@ coverage/
 .env
 
 # Optional application secrets file for local development
-src/main/resources/application-secrets.properties
+mvc-rest-app/src/main/resources/application-secrets.properties
 
