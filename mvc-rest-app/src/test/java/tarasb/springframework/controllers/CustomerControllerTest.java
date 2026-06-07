@@ -5,14 +5,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.exceptions.base.MockitoAssertionError;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import tarasb.springframework.api.v1.model.CustomerDTO;
 import tarasb.springframework.exceptions.ResourceNotFoundException;
 import tarasb.springframework.exceptions.RestResponseEntityExceptionHandler;
 import tarasb.springframework.services.CustomerService;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.Arrays;
 
@@ -37,10 +40,10 @@ class CustomerControllerTest extends AbstractRestControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(customerController)
                 .setControllerAdvice(new RestResponseEntityExceptionHandler())
-                .setMessageConverters(new MappingJackson2HttpMessageConverter(OBJECT_MAPPER))
+                .setMessageConverters(new JacksonJsonHttpMessageConverter((JsonMapper) OBJECT_MAPPER))
                 .build();
     }
 
